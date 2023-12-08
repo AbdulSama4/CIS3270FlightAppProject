@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FlightController">
+   <children>
+      <ImageView fitHeight="372.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Downloads/planeGettyImages-1415179589.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="origin" layoutX="85.0" layoutY="55.0" promptText="City" />
+      <TextField fx:id="destination" layoutX="85.0" layoutY="92.0" promptText="City" />
+      <TextField fx:id="date" layoutX="85.0" layoutY="127.0" promptText="MM/DD/YYYY" />
+      <Text layoutX="31.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Origin" />
+      <Text layoutX="16.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination" />
+      <Text layoutX="34.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+      <TableView layoutX="15.0" layoutY="174.0" prefHeight="185.0" prefWidth="568.0">
+        <columns>
+          <TableColumn fx:id="colFlightNum" prefWidth="84.0" text="Flight #" />
+          <TableColumn fx:id="colDate" prefWidth="66.0" text="Date" />
+            <TableColumn fx:id="colDepartureTime" prefWidth="98.0" text="Departure Time" />
+            <TableColumn fx:id="colDepartFrom" prefWidth="75.0" text="From" />
+            <TableColumn fx:id="colArrivalTo" prefWidth="75.0" text="To" />
+            <TableColumn fx:id="colSeatPrice" prefWidth="75.0" text="Price" />
+            <TableColumn fx:id="colAirline" prefWidth="94.0" text="Airline Name" />
+        </columns>
+      </TableView>
+      <Button fx:id="seeFkightsButton" layoutX="436.0" layoutY="55.0" mnemonicParsing="false" onAction="#seeAllFlightsClicked" text="See Flights" />
+      <Button layoutX="436.0" layoutY="127.0" mnemonicParsing="false" onAction="#bookFlightsButtonClicked" text="Book Flight" />
+      <Button fx:id="logOutButton" layoutX="527.0" layoutY="14.0" mnemonicParsing="false" text="Logout" />
+   </children>
+</AnchorPane>
