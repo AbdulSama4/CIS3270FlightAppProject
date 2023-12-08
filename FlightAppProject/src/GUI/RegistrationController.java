@@ -6,19 +6,19 @@ import java.util.ResourceBundle;
 import BusinessLogic.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+//import javafx.scene.Parent;
+//import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+//import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
-import javafx.scene.Node;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+//import javafx.scene.Node;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.PreparedStatement;
+//import java.sql.SQLException;
 
 
 public class RegistrationController extends Customer{

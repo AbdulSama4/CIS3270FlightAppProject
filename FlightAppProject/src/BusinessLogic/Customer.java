@@ -39,7 +39,7 @@ public class Customer extends Flight{
 			// Parameterized constructor to initialize customer information
 
 			public Customer(String firstName, String lastName, String address, String zipCode, String state,
-	                String username, String password, String email, String SSN, String securityQuestion,
+	                String username, String password, String email, String SSN,
 	                String securityAnswer, int customerID) {
 	    this.firstName = firstName;
 	    this.lastName = lastName;
@@ -50,7 +50,6 @@ public class Customer extends Flight{
 	    this.password = password;
 	    this.email = email;
 	    this.SSN = SSN;
-	   // this.securityQuestion = securityQuestion;
 	    this.securityAnswer = securityAnswer;
 	    this.customerID = customerID;
 	}
@@ -115,14 +114,6 @@ public class Customer extends Flight{
 			public void setSSN(String SSN) {	
 				this.SSN = SSN;
 			}
-			
-			// String getSecurityQuestion() {			
-			//	return securityQuestion;
-			//}
-			
-			//public void setSecurityQuestion(String securityQuestion) {			
-			//	this.securityQuestion = securityQuestion;
-			//}
 			
 			public String getSecurityAnswer() {			
 				return securityAnswer;
