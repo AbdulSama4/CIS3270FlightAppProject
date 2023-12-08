@@ -18,7 +18,7 @@ public class AdminData {
 			
 				try {
 			    myConn = DriverManager.getConnection
-			    ("jdbc:sqlserver://localhost:3306/connection","root","Ionicwave805.");
+			    ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 			    myStmt = myConn.prepareStatement(sql);
 			    myStmt.setString(1, user);
 			    myStmt.setString(2, pass);
@@ -49,7 +49,7 @@ public class AdminData {
 
 				try {
 				    myConn = DriverManager.getConnection
-				    ("jdbc:sqlserver://localhost:3306/unisoft","root","root");
+				    ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 				    myStmt = myConn.prepareStatement(sql);
 				    myStmt.setString(1, flightNum);
 				    myStmt.executeUpdate();
@@ -71,7 +71,7 @@ public class AdminData {
 			
 			try {
 		    myConn = DriverManager.getConnection
-		    ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+		    ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 		    myStmt = myConn.prepareStatement(sql);
 		    myStmt.setString(1, flightNum);
 		    myRs = myStmt.executeQuery();
@@ -100,7 +100,7 @@ public class AdminData {
 		
 				try {
 				    myConn = DriverManager.getConnection
-				    ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+				    ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 				    myStmt = myConn.prepareStatement(sql);
 				    myStmt.executeUpdate();
 			 	}

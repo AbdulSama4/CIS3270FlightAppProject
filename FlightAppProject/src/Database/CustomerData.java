@@ -14,7 +14,7 @@ public class CustomerData {
 			String sql = "select * from customer where username = ? and password = ? ";
 			try {
 			    myConn = DriverManager.getConnection
-			      ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+			      ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 			    myStmt = myConn.prepareStatement(sql);
 			    myStmt.setString(1, user);
 			    myStmt.setString(2, pass);
@@ -47,7 +47,7 @@ public class CustomerData {
 		
 			try {
 		    myConn = DriverManager.getConnection
-		      ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+		      ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 		    myStmt = myConn.prepareStatement(sql);
 		    myStmt.setString(1, user);
 		    myStmt.setString(2, securityAnswer);
@@ -82,7 +82,7 @@ public class CustomerData {
 		
 			try {
 		    myConn = DriverManager.getConnection
-   	      ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+   	      ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 		    myStmt = myConn.prepareStatement(sql);
 		    myStmt.setString(1, user);
 		    myRs = myStmt.executeQuery();
@@ -118,7 +118,7 @@ public class CustomerData {
 		
 			try {
 		    myConn = DriverManager.getConnection
-		      ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+		      ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 		    myStmt = myConn.prepareStatement(sql);
 		    
 		    myStmt.setInt(1, 0);
@@ -154,7 +154,7 @@ public class CustomerData {
 		
 			try {
 		    myConn = DriverManager.getConnection
-		      ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+		      ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 		    myStmt = myConn.prepareStatement(sql);
 		    
 		    myStmt.setString(1, username);
@@ -191,7 +191,7 @@ public class CustomerData {
 		
 			try {
 		    myConn = DriverManager.getConnection
-		      ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+		      ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 		    myStmt = myConn.prepareStatement(sql);
 		    myStmt.setString(1, user);
 		    myRs = myStmt.executeQuery();

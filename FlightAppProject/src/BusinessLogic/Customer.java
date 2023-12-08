@@ -124,16 +124,15 @@ public class Customer extends Flight{
 			
 			// Method to check login credentials and throw an exception if invalid
 			
-			public boolean login(String username, String password) throws Exception {
-				
-		        // Check if entered username and password match stored values
-		        if (username.equals(this.username) && password.equals(this.password)) {
-		            // Username and password match, login successful
-		            return true;
-		        } else {
-		            // Username or password is incorrect, throw a standard Exception
-		            throw new Exception("Invalid username or password");
-		        }
+			public boolean login(String enteredUsername, String enteredPassword) {
+			    // Trim and check if entered username and password match stored values
+			    if (enteredUsername.trim().equals(this.username) && enteredPassword.equals(this.password)) {
+			        // Username and password match, login successful
+			        return true;
+			    } else {
+			        // User name or password is incorrect, login failed
+			        return false;
+			    }
 			}
 			
 			public String retrievePassword(String username, String securityAnswer)throws Exception{
@@ -174,7 +173,8 @@ public class Customer extends Flight{
 		    }
 
 		    public boolean register(String firstName, String lastName, String address, String zipCode, String state,
-		            String username, String password, String email, String SSN, String securityAnswer) throws Exception {
+		            String username, String password, String email, String SSN,
+		            String securityAnswer) throws Exception {
 
 		        // Basic validation for required fields
 		        if (firstName.isEmpty() || lastName.isEmpty() || address.isEmpty() || zipCode.isEmpty()
@@ -194,7 +194,9 @@ public class Customer extends Flight{
 
 		        // Registration successful
 		        System.out.println("Registration successful");
-				return false;
+		        
+		        return true;
+
 		    }
 	
 	

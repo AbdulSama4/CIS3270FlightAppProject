@@ -14,7 +14,7 @@ public class FlightData extends AdminData {
 public static Connection getConnection() throws SQLException {
 		
 		Connection myConn = DriverManager.getConnection
-	    ("jdbc:sqlserver://localhost:3306/connection","root","Ionicwave805.");
+	    ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 
 			return myConn;		
 	}
@@ -30,7 +30,7 @@ public static Connection getConnection() throws SQLException {
 			
 			try {
 			myConn = DriverManager.getConnection
-			("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+			("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 			myStmt = myConn.prepareStatement(sql);
 			
 			myStmt.setString(1, flightNums);
@@ -61,7 +61,7 @@ public static Connection getConnection() throws SQLException {
 		
 			try {
 		    myConn = DriverManager.getConnection
-		    ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+		    ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 		    myStmt = myConn.prepareStatement(sql);
 		    myStmt.setInt(1, customerID);
 		    myStmt.setString(2, flightNum);
@@ -93,7 +93,7 @@ public static Connection getConnection() throws SQLException {
 		
 			try {
 			    myConn = DriverManager.getConnection
-			    ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+			    ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 			    myStmt = myConn.prepareStatement(sql);
 			    myStmt.setInt(1, 0);
 			    myStmt.setInt(2, customerID);
@@ -117,7 +117,7 @@ public static Connection getConnection() throws SQLException {
 	
 			try {
 			    myConn = DriverManager.getConnection
-			      ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+			      ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 			    myStmt = myConn.prepareStatement(sql);
 			    myStmt.executeUpdate();
 		 	}
@@ -141,7 +141,7 @@ public static Connection getConnection() throws SQLException {
 		
 			try {
 		    myConn = DriverManager.getConnection
-		    ("jdbc:sqlserver://localhost:3306/unisoft","root","Toonkie#13");
+		    ("jdbc:sqlserver://localhost:3306/CustomerData","root","Ionicwave805.");
 		    myStmt = myConn.prepareStatement(sql);
 		    myStmt.setString(1, flightNum);
 		    myRs = myStmt.executeQuery();

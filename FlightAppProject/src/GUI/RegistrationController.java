@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import BusinessLogic.Customer;
+import Database.CustomerData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 //import javafx.scene.Parent;
@@ -73,13 +74,15 @@ public class RegistrationController extends Customer{
 
 	    @FXML
 	    private Label lblNotFilled;
+	    
+	    //private boolean registrationSuccess;
 	   
 
 	    @FXML
-	    void signupClicked(ActionEvent event) {
+	    private void signupClicked(ActionEvent event) {
 	        try {
-	            Customer customer = new Customer();
-	            boolean registrationSuccess = customer.register(
+	            // Validate and register the customer
+	            boolean registrationSuccess = register(
 	                    firstName.getText(),
 	                    lastName.getText(),
 	                    address.getText(),
@@ -93,15 +96,34 @@ public class RegistrationController extends Customer{
 	            );
 
 	            if (registrationSuccess) {
-	                // Registration successful
-	                System.out.println("Registration successful");
+	                // Registration successful, update the database
+	                CustomerData customerData = new CustomerData();
+	                try {
+	                    customerData.register(
+	                            firstName.getText(),
+	                            lastName.getText(),
+	                            email.getText(),
+	                            address.getText(),
+	                            username.getText(),
+	                            password.getText(),
+	                            SSN.getText(),
+	                            securityAnswer.getText(),
+	                            zipCode.getText(),
+	                            state.getText(),
+	                            "example_birthday" // Replace with actual birthday
+	                    );
+
+	                    System.out.println("Success");
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                    // Handle database update error
+	                }
 	            } else {
 	                lblUserTaken.setText("Username is already taken.");
 	            }
 	        } catch (Exception e) {
 	            lblNotFilled.setText("One or more fields are empty.");
-	        }
-	    }
+	        }}
 
 	    @FXML
 	    void initialize() {
