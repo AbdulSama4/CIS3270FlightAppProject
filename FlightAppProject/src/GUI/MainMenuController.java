@@ -103,9 +103,9 @@ public class MainMenuController extends Customer {
 	        }
 	    }
 	    
-	    public void userSignInBtnClicked(ActionEvent event) throws Exception {
-	    	
-	    	try {
+	    @FXML
+	    public void userSignInBtnClicked(ActionEvent event) {
+	        try {
 	            // Get the entered username and password from the text fields
 	            String enteredUsername = username.getText();
 	            String enteredPassword = password.getText();
@@ -117,17 +117,11 @@ public class MainMenuController extends Customer {
 	                // If login is successful, you can perform additional actions or navigate to another scene
 	                System.out.println("Login successful!");
 	                // For example, you can load a new FXML file and set it as the scene
-	                FXMLLoader loader = new FXMLLoader(getClass().getResource("flights.fxml"));
-	                Parent otherScene = loader.load();
-	                Scene scene = new Scene(otherScene);
-
-	                // Get the stage information
+	                // (Replace "flights.fxml" with the appropriate FXML file for your application)
+	                FXMLLoader loader = new FXMLLoader(getClass().getResource("flightdata.fxml"));
+	                AnchorPane otherScene = loader.load();
 	                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-	                // Set the new scene on the stage
-	                stage.setScene(scene);
-
-	                // Show the stage
+	                stage.getScene().setRoot(otherScene);
 	                stage.show();
 	            } else {
 	                // If login is unsuccessful, display an error message
@@ -135,10 +129,8 @@ public class MainMenuController extends Customer {
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            // Handle the exception appropriately (e.g., show an error message)
 	            lblErrors.setText("An error occurred during login");
 	        }
-	        
-	        }
+	    }
 
 }

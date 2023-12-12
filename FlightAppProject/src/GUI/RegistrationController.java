@@ -110,7 +110,7 @@ public class RegistrationController extends Customer{
 	                            securityAnswer.getText(),
 	                            zipCode.getText(),
 	                            state.getText(),
-	                            "example_birthday" // Replace with actual birthday
+	                            null // or pass an empty string for the birthday parameter
 	                    );
 
 	                    System.out.println("Success");
@@ -123,7 +123,9 @@ public class RegistrationController extends Customer{
 	            }
 	        } catch (Exception e) {
 	            lblNotFilled.setText("One or more fields are empty.");
-	        }}
+	        }
+	        
+	    }
 
 	    @FXML
 	    void initialize() {

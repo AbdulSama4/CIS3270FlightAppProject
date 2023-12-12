@@ -2,6 +2,8 @@ package BusinessLogic;
 
 import java.util.Random;
 
+import Database.CustomerData;
+
 public class Customer extends Flight{
 	
 	// Private fields to store customer information
@@ -124,16 +126,10 @@ public class Customer extends Flight{
 			
 			// Method to check login credentials and throw an exception if invalid
 			
-			public boolean login(String enteredUsername, String enteredPassword) {
-			    // Trim and check if entered username and password match stored values
-			    if (enteredUsername.trim().equals(this.username) && enteredPassword.equals(this.password)) {
-			        // Username and password match, login successful
-			        return true;
-			    } else {
-			        // User name or password is incorrect, login failed
-			        return false;
-			    }
-			}
+			public boolean login(String username, String password) {
+		        CustomerData customerData = new CustomerData();
+		        return customerData.pass(username, password);
+		    }
 			
 			public String retrievePassword(String username, String securityAnswer)throws Exception{
 				// Method to retrieve password based on username and security answer
