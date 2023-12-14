@@ -131,14 +131,22 @@ public class Customer extends Flight{
 		        return customerData.pass(username, password);
 		    }
 			
-			public String retrievePassword(String username, String securityAnswer)throws Exception{
-				// Method to retrieve password based on username and security answer
-				if(username.equals(this.username)&& securityAnswer.equals(this.securityAnswer)) {
-					return password;
-				} else {
-		            // Username or security answer is incorrect, throw a standard Exception
-		            throw new Exception("Invalid username or security answer");
-				}
+			public String retrievePassword(String enteredUsername, String enteredSecurityAnswer, String newPassword) {
+			    // Method to retrieve password based on username and security answer
+			    if (enteredUsername.equals(this.username) && enteredSecurityAnswer.equals(this.securityAnswer)) {
+			        if (newPassword != null && !newPassword.isEmpty()) {
+			            // Update the password with the new one
+			            this.password = newPassword;
+			            // Return the new password
+			            return newPassword;
+			        } else {
+			            // Handle the case where the new password is not provided
+			            return null;
+			        }
+			    } else {
+			        // Return null or an empty string to indicate a mismatch
+			        return null;
+			    }
 			}
 			
 			public int generateRandomCustomerID() {

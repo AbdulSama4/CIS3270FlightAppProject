@@ -148,5 +148,46 @@ ex.printStackTrace();
 
         return custID;
     }
+    
+    public String getPass(String user, String securityAnswer) {
+        String pass = null;
+        String sql = "select * from customer where username = ? and securityAnswer = ?";
 
+        try (
+            Connection myConn = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
+            PreparedStatement myStmt = myConn.prepareStatement(sql);
+        ) {
+            myStmt.setString(1, user);
+            myStmt.setString(2, securityAnswer);
+
+            try (ResultSet myRs = myStmt.executeQuery()) {
+                if (myRs.next()) {
+                    pass = myRs.getString("password");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return pass;
+
+}
+    
+    public void updatePassword(String username, String newPassword) {
+        String sql = "UPDATE customer SET password = ? WHERE username = ?";
+
+        try (
+            Connection myConn = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
+            PreparedStatement myStmt = myConn.prepareStatement(sql);
+        ) {
+            myStmt.setString(1, newPassword);
+            myStmt.setString(2, username);
+
+            myStmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    
+}
+    
 }

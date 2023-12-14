@@ -1,6 +1,7 @@
 package GUI;
 
 import BusinessLogic.Customer;
+import Database.CustomerData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -73,12 +74,23 @@ public void resetPasswordClicked(ActionEvent event) {
     String enteredSecurityAnswer = securityAnswer.getText();
     String newPass = newPassword.getText();
 
-    try {
-        String retrievedPassword = retrievePassword(enteredUsername, enteredSecurityAnswer);
+    CustomerData customerData = new CustomerData();
 
-        if (retrievedPassword.equals(newPass)) {
+    try {
+        // Retrieve the existing password from the database
+        String retrievedPassword = customerData.getPass(enteredUsername, enteredSecurityAnswer);
+
+        if (retrievedPassword != null && !retrievedPassword.equals(newPass)) {
+            // Password reset successful
             usernameSecurityQuestionMatch.setText("Password reset successful");
+
+            // Update the password in the database
+            customerData.updatePassword(enteredUsername, newPass);
+
+            // Update the password in the Customer object
+            setPassword(newPass);
         } else {
+            // Invalid username or security answer
             usernameSecurityQuestionMissmatch.setText("Invalid username or security answer");
         }
     } catch (Exception e) {
