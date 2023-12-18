@@ -1,8 +1,8 @@
 package BusinessLogic;
 
 public class Flight {
-	
-protected String flightID;
+
+	protected String flightID;
 	
 	private String flightNum;
 	
@@ -33,23 +33,23 @@ protected String flightID;
 	public Flight() {}
 		
 	public Flight(String flightNum, String departureDate, String departureTime, String arrivalTime,
-			String flightDuration, String to, String from, String airlineName, int capacity, int numBooked,
-			String destinationAirport, String flight_price, String boardingTime,String flightID) {
+			 String to, String from, String airlineName, int capacity, int numBooked,
+			 String flight_price ,String flightID) {
 		
 		this.flightID=flightID;
 		this.flightNum = flightNum;
 		this.departureDate = departureDate;
 		this.departureTime = departureTime;
 		this.arrivalTime = arrivalTime;
-		this.flightDuration = flightDuration;
+		//this.flightDuration = flightDuration;
 		this.to = to;
 		this.from = from;
 		this.airlineName = airlineName;
 		this.capacity = capacity;
 		this.numBooked = numBooked;
-		this.destinationAirport = destinationAirport;
+		//this.destinationAirport = destinationAirport;
 		this.flightPrice = flight_price;
-		this.boardingTime = boardingTime;
+		//this.boardingTime = boardingTime;
 	}
 
 	public String getDestinationAirport() {
@@ -107,7 +107,7 @@ protected String flightID;
 	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
-
+	/*
 	public String getFlightDuration() {
 		return flightDuration;
 	}
@@ -115,6 +115,7 @@ protected String flightID;
 	public void setFlightDuration(String flightDuration) {
 		this.flightDuration = flightDuration;
 	}
+	*/
 
 	public String getTo() {
 		return to;
@@ -170,6 +171,7 @@ protected String flightID;
 
 	}
 
+
 	public String getFlight_price() {
 		return flightPrice;
 	}
@@ -177,6 +179,42 @@ protected String flightID;
 	public void setFlight_price(String flight_price) {
 		this.flightPrice = flight_price;
 	}
+	
+	// Method to check if the flight is full and notify the user
+	
+    public boolean flightFull() {
+        if (isFull()) {
+            System.out.println("Sorry, the flight is full. Cannot book more passengers.");
+            return true;
+        } else {
+            System.out.println("The flight is not full. Seats are available.");
+            return false;
+        }
+    }
+    
+    // Method to check for time conflict with another flight and notify the user
+    
+    public boolean flightTimeConflict(Flight otherFlight) {
+        if (hasConflict(otherFlight)) {
+            System.out.println("There is a time conflict with another flight (ID: " + otherFlight.getFlightID() + ").");
+            return true;
+        } else {
+            System.out.println("No time conflict with other flights.");
+            return false;
+        }
+    }
+    
+    // Method to check if the user has already booked this flight using a unique identifier
+    
+    public boolean unique(String passengerID) {
+        if (passengerID != null && passengerID.equals(this.flightID)) {
+            System.out.println("You have already booked this flight (ID: " + this.flightID + ").");
+            return true;
+        } else {
+            System.out.println("This flight is not booked by you. You can proceed with the booking.");
+            return false;
+        }
+    }
 	
 	// Method to check if a flight has a conflicting date and time with another flight
 	
@@ -232,5 +270,5 @@ protected String flightID;
             throw new Exception("No passengers booked for this flight.");
         }
     } 
-
+    
 }

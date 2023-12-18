@@ -202,6 +202,10 @@ public class Customer extends Flight{
 		        return true;
 
 		    }
+		    
+		    public int getcustomerID() {
+		        return this.customerID;
+		    }
 	
 	
 
