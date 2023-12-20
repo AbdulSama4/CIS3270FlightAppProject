@@ -1,30 +1,21 @@
 package GUI;
 
-//import java.io.IOException;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
 import BusinessLogic.Flight;
 import Database.FlightData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-//import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-//import javafx.scene.Node;
-//import javafx.scene.Parent;
-//import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
+
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class FlightController extends MainMenuController implements Initializable {
 
@@ -156,37 +147,31 @@ public class FlightController extends MainMenuController implements Initializabl
             throws ClassNotFoundException, SQLException {
         ObservableList<Flight> searchResults = FXCollections.observableArrayList();
 
-        PreparedStatement myStmt = null;
-        ResultSet rs = null;
         String sql = "SELECT * FROM flights WHERE departFrom = ? AND arrivalTo = ? AND date = ?";
+        try (Connection con = FlightData.getConnection();
+             PreparedStatement myStmt = con.prepareStatement(sql)) {
 
-        try {
-            Connection con = FlightData.getConnection();
-            myStmt = con.prepareStatement(sql);
             myStmt.setString(1, from);
             myStmt.setString(2, to);
             myStmt.setString(3, date);
 
-            rs = myStmt.executeQuery();
-
-            while (rs.next()) {
-            	Flight flight = new Flight(
-            		    rs.getString("flightID"),
-            		    rs.getString("flightNum"),
-            		    rs.getString("FlightDate"),
-            		    rs.getString("departTime"),
-            		    rs.getString("departFrom"),
-            		    rs.getString("arrivalTo"),
-            		    rs.getString("airline"),
-            		    rs.getString("seatPrices"),
-            		    rs.getInt("numBooked"),
-            		    rs.getInt("capacity"),
-            		    rs.getString("destinationAirport"), // Replace with your actual column name
-            		    rs.getString("boardingTime"),
-            		    rs.getString("flightPrice")
-            		);
-
-                searchResults.add(flight);
+            try (ResultSet rs = myStmt.executeQuery()) {
+                while (rs.next()) {
+                    Flight flight = new Flight(
+                            rs.getString("flightNum"),
+                            rs.getString("departureDate"),
+                            rs.getString("departureTime"),
+                            rs.getString("arrivalTime"),
+                            rs.getString("from"),
+                            rs.getString("to"),
+                            rs.getString("airlineName"),
+                            rs.getInt("capacity"),
+                            rs.getInt("numBooked"),
+                            rs.getDouble("flight_price"),
+                            rs.getString("flightID")
+                    );
+                    searchResults.add(flight);
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -198,37 +183,40 @@ public class FlightController extends MainMenuController implements Initializabl
     public void initialize(URL arg0, ResourceBundle arg1) {
         // Initialize the controller, if needed
         colFlightNum.setCellValueFactory(new PropertyValueFactory<>("flightNum"));
-        colDate.setCellValueFactory(new PropertyValueFactory<>("FlightDate"));
-        colDepartureTime.setCellValueFactory(new PropertyValueFactory<>("DepartTime"));
-        colDepartFrom.setCellValueFactory(new PropertyValueFactory<>("DepartFrom"));
-        colArrivalTo.setCellValueFactory(new PropertyValueFactory<>("ArrivalTo"));
-        colAirline.setCellValueFactory(new PropertyValueFactory<>("Airline"));
-        colSeatPrice.setCellValueFactory(new PropertyValueFactory<>("SeatPrice"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("departureDate"));
+        colDepartureTime.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
+        colDepartFrom.setCellValueFactory(new PropertyValueFactory<>("from"));
+        colArrivalTo.setCellValueFactory(new PropertyValueFactory<>("to"));
+        colAirline.setCellValueFactory(new PropertyValueFactory<>("airlineName"));
+        colSeatPrice.setCellValueFactory(new PropertyValueFactory<>("flightPrice"));
         colCapacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         colNumBooked.setCellValueFactory(new PropertyValueFactory<>("numBooked"));
 
-        // You may fetch and set the initial data here if needed
         try {
             Connection con = FlightData.getConnection();
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM flights");
 
             while (rs.next()) {
                 observableList.add(new Flight(
-                        rs.getString("flightNum"),
-                        rs.getString("flightDate"),
-                        rs.getString("departTime"),
-                        rs.getString("departFrom"),
-                        rs.getString("arrivalTo"),
-                        rs.getString("airline"),
-                        rs.getString("seatPrices"),
-                        rs.getString("numBooked"),
-                        customerID, customerID, rs.getString("capacity"), date, date, date
+                    rs.getString("flightNum"),
+                    rs.getString("departureDate"),
+                    rs.getString("departureTime"),
+                    rs.getString("arrivalTime"),
+                    rs.getString("from"),
+                    rs.getString("to"),
+                    rs.getString("airlineName"),
+                    rs.getInt("capacity"),
+                    rs.getInt("numBooked"),
+                    rs.getDouble("flightPrice"),
+                    rs.getString("flightID")
                 ));
             }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         Table.setItems(observableList);
     }
+
 }

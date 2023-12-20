@@ -27,11 +27,11 @@ public class Booking extends Flight{
 
     // Parameterized constructor for creating a booking with specific details
     public Booking(String flightNum, String departureDate, String departureTime, String arrivalTime,
-                   String flightDuration, String to, String from, String airlineName, int capacity, int numBooked,
-                   String destinationAirport, String flight_price, String boardingTime, String flightID,
-                   String SSN) {
+            String flightDuration, String to, String from, String airlineName, int capacity, int numBooked,
+            String destinationAirport, String flight_price, String boardingTime, String flightID, String SSN) {
         // Call the constructor of the superclass (Flight) to set flight-related details
-        super(flightNum, departureDate, departureTime, arrivalTime, flightDuration, to, from, airlineName, capacity, numBooked,
+    	
+    	super(flightNum, departureDate, departureTime, arrivalTime, flightDuration, from, to, airlineName, capacity, numBooked,
                 destinationAirport, flight_price, boardingTime, flightID);
 
         // Increment the confirmation number counter and set the unique confirmation number

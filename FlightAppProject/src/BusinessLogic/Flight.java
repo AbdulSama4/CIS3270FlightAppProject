@@ -12,7 +12,7 @@ public class Flight {
 	
 	private String arrivalTime;
 	
-	private String flightDuration;
+	//private String flightDuration;
 	
 	private String to;
 	
@@ -26,15 +26,15 @@ public class Flight {
 	
 	private String destinationAirport;
 	
-	private String flightPrice;
+	private Double flightPrice;
 	
 	private String boardingTime;
 
 	public Flight() {}
 		
 	public Flight(String flightNum, String departureDate, String departureTime, String arrivalTime,
-			 String to, String from, String airlineName, int capacity, int numBooked,
-			 String flight_price ,String flightID) {
+		     String to, String from, String airlineName, int capacity, int numBooked,
+		     Double flight_price, String flightID) {
 		
 		this.flightID=flightID;
 		this.flightNum = flightNum;
@@ -172,13 +172,13 @@ public class Flight {
 	}
 
 
-	public String getFlight_price() {
-		return flightPrice;
+	public Double getFlightPrice() {
+		return this.flightPrice;
 	}
 
-	public void setFlight_price(String flight_price) {
-		this.flightPrice = flight_price;
-	}
+	//public void setFlight_price(Double flight_price) {
+	//	this.flightPrice = flightPrice;
+	//}
 	
 	// Method to check if the flight is full and notify the user
 	
@@ -271,4 +271,6 @@ public class Flight {
         }
     } 
     
+    
 }
+    
