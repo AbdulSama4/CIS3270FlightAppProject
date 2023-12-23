@@ -32,25 +32,21 @@ public class Flight {
 
 	public Flight() {}
 		
-	public Flight(String flightNum, String departureDate, String departureTime, String arrivalTime,
-		     String to, String from, String airlineName, int capacity, int numBooked,
-		     Double flight_price, String flightID) {
-		
-		this.flightID=flightID;
-		this.flightNum = flightNum;
-		this.departureDate = departureDate;
-		this.departureTime = departureTime;
-		this.arrivalTime = arrivalTime;
-		//this.flightDuration = flightDuration;
-		this.to = to;
-		this.from = from;
-		this.airlineName = airlineName;
-		this.capacity = capacity;
-		this.numBooked = numBooked;
-		//this.destinationAirport = destinationAirport;
-		this.flightPrice = flight_price;
-		//this.boardingTime = boardingTime;
-	}
+	public Flight(String flightNum, String departureDate, String departureTime,
+            String from, String to, String airlineName, int capacity,
+            int numBooked, double flightPrice, String flightID) {
+  // Set the values in the correct order to match the SQL table
+  this.flightNum = flightNum;
+  this.departureDate = departureDate;
+  this.departureTime = departureTime;
+  this.from = from;
+  this.to = to;
+  this.airlineName = airlineName;
+  this.capacity = capacity;
+  this.numBooked = numBooked;
+  this.flightPrice = flightPrice;
+  this.flightID = flightID;
+}
 
 	public String getDestinationAirport() {
 		return destinationAirport;

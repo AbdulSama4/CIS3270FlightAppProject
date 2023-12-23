@@ -21,133 +21,125 @@ public class FlightController extends MainMenuController implements Initializabl
 
     @FXML
     private TableColumn<Flight, String> colFlightNum;
-    
+
     @FXML
     private TableView<Flight> Table;
-    
+
     @FXML
     private TableColumn<Flight, String> colDate;
-    
+
     @FXML
     private TableColumn<Flight, String> colDepartureTime;
-    
+
     @FXML
     private TableColumn<Flight, String> colDepartFrom;
-    
+
     @FXML
     private TableColumn<Flight, String> colArrivalTo;
-    
+
     @FXML
     private TableColumn<Flight, String> colAirline;
-    
+
     @FXML
     private TableColumn<Flight, String> colSeatPrice;
 
-   // @FXML
-   // private TableView<Flight> tableview;
-
-    @FXML
-    private Label lblflightBooked;
-
-    @FXML
-    private TextField custDepartDate;
-
-    @FXML
-    private TextField custDepartFrom;
-
-    @FXML
-    private TextField custArrivalTo;
-
-    @FXML
-    private Button seeFlightsButton;
-    
-    @FXML
-    private TextField origin;
-    
-    @FXML
-    private TextField destination;
-    
-    //@FXML
-   // private TextField date;
-    
     @FXML
     private TableColumn<Flight, Integer> colCapacity;
 
     @FXML
     private TableColumn<Flight, Integer> colNumBooked;
 
-    private ObservableList<Flight> observableList = FXCollections.observableArrayList();
+    @FXML
+    private Label lblflightBooked;
 
+    @FXML
+    private TextField origin;
+
+    @FXML
+    private TextField destination;
+
+    @FXML
+    private TextField flightDate;
+
+    private ObservableList<Flight> observableList = FXCollections.observableArrayList();
     private String date;
-    private String from;
-    private String to;
+    
+
+    @FXML
+    void enterButtonClicked(ActionEvent event) {
+        lblflightBooked.setText("");
+
+        date = flightDate.getText();
+        String from = origin.getText();
+        String to = destination.getText();
+
+        if (date.isEmpty() || from.isEmpty() || to.isEmpty()) {
+            lblflightBooked.setText("One or more search fields are empty.");
+        } else {
+            try {
+                observableList.clear();
+                ObservableList<Flight> searchResults = getSearch(date, from, to);
+                observableList.addAll(searchResults);
+                Table.setItems(observableList);
+                Table.setVisible(true);
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+                lblflightBooked.setText("Error: " + e.getMessage());
+            }
+        }
+    }
 
     @FXML
     void seeFlightsButtonClicked(ActionEvent event) {
-        // Handle the button click event, e.g., fetch flights from the database
-        // and update the TableView.
         lblflightBooked.setText("");
 
-        date = custDepartDate.getText().toString();
-        from = custDepartFrom.getText().toString();
-        to = custArrivalTo.getText().toString();
+        String from = origin.getText();
+        String to = destination.getText();
 
-        if (date.trim().equals("") || from.trim().equals("") || to.trim().equals("")) {
+        if (date == null || date.trim().equals("") || from.trim().equals("") || to.trim().equals("")) {
             lblflightBooked.setText("One or more search fields are empty.");
         } else {
-            // Fetch flights from the database based on the user's criteria
             try {
                 ObservableList<Flight> searchResults = getSearch(date, from, to);
                 Table.setItems(searchResults);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
-                // Handle the exception appropriately (e.g., show an error message)
+                lblflightBooked.setText("Error: " + e.getMessage());
             }
         }
     }
-    
+
     @FXML
     void bookFlightsButtonClicked(ActionEvent event) {
-        // Get the selected flight from the TableView
         Flight selectedFlight = Table.getSelectionModel().getSelectedItem();
 
         if (selectedFlight == null) {
-            // No flight selected, display a message or handle as needed
             lblflightBooked.setText("Please select a flight to book.");
             return;
         }
 
         try {
-            // Check if the flight is full
             if (selectedFlight.flightFull()) {
                 lblflightBooked.setText("Sorry, the selected flight is full.");
             } else if (selectedFlight.flightTimeConflict(selectedFlight)) {
-                // Check if there is a time conflict with the selected flight
                 lblflightBooked.setText("Sorry, there is a time conflict with the selected flight.");
             } else {
-                // Book the flight for the user
                 selectedFlight.bookPassenger();
-
-                // Update the TableView to reflect the changes
-                ObservableList<Flight> updatedFlights = getSearch(date, from, to);
+                ObservableList<Flight> updatedFlights = getSearch(date, origin.getText(), destination.getText());
                 Table.setItems(updatedFlights);
-
-                // Display a success message or navigate to the Book.fxml
                 lblflightBooked.setText("Flight booked successfully!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // Handle the exception appropriately (e.g., show an error message)
             lblflightBooked.setText("Error booking the flight: " + e.getMessage());
         }
     }
 
-    // Method to retrieve flights from the database based on user criteria
     private ObservableList<Flight> getSearch(String date, String from, String to)
             throws ClassNotFoundException, SQLException {
         ObservableList<Flight> searchResults = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM flights WHERE departFrom = ? AND arrivalTo = ? AND date = ?";
+        String sql = "SELECT * FROM flights WHERE `from` = ? AND `to` = ? AND departureDate = ?";
         try (Connection con = FlightData.getConnection();
              PreparedStatement myStmt = con.prepareStatement(sql)) {
 
@@ -161,13 +153,12 @@ public class FlightController extends MainMenuController implements Initializabl
                             rs.getString("flightNum"),
                             rs.getString("departureDate"),
                             rs.getString("departureTime"),
-                            rs.getString("arrivalTime"),
                             rs.getString("from"),
                             rs.getString("to"),
                             rs.getString("airlineName"),
                             rs.getInt("capacity"),
                             rs.getInt("numBooked"),
-                            rs.getDouble("flight_price"),
+                            rs.getDouble("flightPrice"),
                             rs.getString("flightID")
                     );
                     searchResults.add(flight);
@@ -175,13 +166,13 @@ public class FlightController extends MainMenuController implements Initializabl
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            lblflightBooked.setText("Error: " + ex.getMessage());
         }
         return searchResults;
     }
-    
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // Initialize the controller, if needed
         colFlightNum.setCellValueFactory(new PropertyValueFactory<>("flightNum"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("departureDate"));
         colDepartureTime.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
@@ -198,25 +189,25 @@ public class FlightController extends MainMenuController implements Initializabl
 
             while (rs.next()) {
                 observableList.add(new Flight(
-                    rs.getString("flightNum"),
-                    rs.getString("departureDate"),
-                    rs.getString("departureTime"),
-                    rs.getString("arrivalTime"),
-                    rs.getString("from"),
-                    rs.getString("to"),
-                    rs.getString("airlineName"),
-                    rs.getInt("capacity"),
-                    rs.getInt("numBooked"),
-                    rs.getDouble("flightPrice"),
-                    rs.getString("flightID")
+                        rs.getString("flightNum"),
+                        rs.getString("departureDate"),
+                        rs.getString("departureTime"),
+                        rs.getString("from"),
+                        rs.getString("to"),
+                        rs.getString("airlineName"),
+                        rs.getInt("capacity"),
+                        rs.getInt("numBooked"),
+                        rs.getDouble("flightPrice"),
+                        rs.getString("flightID")
                 ));
             }
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            lblflightBooked.setText("Error: " + ex.getMessage());
         }
 
         Table.setItems(observableList);
+        Table.setVisible(false);
     }
-
 }
