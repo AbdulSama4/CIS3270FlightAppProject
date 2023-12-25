@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import BusinessLogic.Flight;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class UserBookingsData {
 
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/CustomerData";
@@ -86,4 +90,6 @@ public class UserBookingsData {
             e.printStackTrace();
         }
 }
+    
+    
 }
