@@ -76,21 +76,18 @@ public class FlightData {
     }
 
     public boolean flightFull(String flightNum) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM bookings WHERE flightNum = ?";
-        try (Connection myConn = getConnection();
-             PreparedStatement myStmt = myConn.prepareStatement(sql)) {
+        String sql = "SELECT * FROM flights WHERE flightNum = ? AND numBooked >= capacity";
+        try (Connection con = getConnection();
+             PreparedStatement myStmt = con.prepareStatement(sql)) {
 
             myStmt.setString(1, flightNum);
 
-            try (ResultSet myRs = myStmt.executeQuery()) {
-                if (myRs.next()) {
-                    int count = myRs.getInt(1);
-                    return count >= 5;
-                }
+            try (ResultSet rs = myStmt.executeQuery()) {
+                return rs.next();
             }
         }
-        return false;
     }
+        
 
     public boolean flightTimeConflict(String date, String time, int customerID) throws SQLException {
         String sql = "SELECT flights.date, flights.departureTime FROM flights " +

@@ -250,9 +250,16 @@ public class Flight {
         if (isFull()) {
             throw new Exception("The flight is full. Cannot book more passengers.");
         }
-        
-     // Increment the number of booked passengers
+
+        // Log information about the booking process
+        System.out.println("Booking passenger for flight " + this.getFlightID());
+        System.out.println("Number of booked passengers before: " + this.getNumBooked());
+
+        // Increment the number of booked passengers
         incrementNumBooked();
+
+        // Log information after the booking
+        System.out.println("Number of booked passengers after: " + this.getNumBooked());
     }
         
     // Method to cancel a passenger's booking for the flight

@@ -1,7 +1,9 @@
 package GUI;
 
 import BusinessLogic.Flight;
+import BusinessLogic.SessionManager;
 import Database.FlightData;
+import Database.UserBookingsData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -119,21 +121,36 @@ public class FlightController extends MainMenuController implements Initializabl
         }
 
         try {
-            if (selectedFlight.flightFull()) {
-                lblflightBooked.setText("Sorry, the selected flight is full.");
-            } else if (selectedFlight.flightTimeConflict(selectedFlight)) {
-                lblflightBooked.setText("Sorry, there is a time conflict with the selected flight.");
+        	String username = SessionManager.getCurrentUsername(); // Get the username of the current signed-in user customerID = getcustomerID(); // Get the ID of the current signed-in user
+            String flightNum = selectedFlight.getFlightNum();
+
+            if (!UserBookingsData.isBooked(username, flightNum)) {
+                // Check if the user has not already booked this flight
+                FlightData flightData = new FlightData(); // Instantiate FlightData
+                if (!flightData.flightFull(flightNum)) {
+                    // Check if the flight is not full
+                	UserBookingsData.addBooking(username, flightNum);
+
+                    // Update the TableView to reflect the changes
+                    ObservableList<Flight> updatedFlights = getSearch(date, origin.getText(), destination.getText());
+                    Table.setItems(updatedFlights);
+
+                    lblflightBooked.setText("Flight booked successfully!");
+                } else {
+                    lblflightBooked.setText("Sorry, the flight is already full.");
+                }
             } else {
-                selectedFlight.bookPassenger();
-                ObservableList<Flight> updatedFlights = getSearch(date, origin.getText(), destination.getText());
-                Table.setItems(updatedFlights);
-                lblflightBooked.setText("Flight booked successfully!");
+                lblflightBooked.setText("You have already booked this flight.");
             }
         } catch (Exception e) {
             e.printStackTrace();
             lblflightBooked.setText("Error booking the flight: " + e.getMessage());
         }
-    }
+        
+        String selectedFlightNum = selectedFlight.getFlightNum();
+        SessionManager.setSelectedFlightNum(selectedFlightNum);
+        
+}
 
     private ObservableList<Flight> getSearch(String date, String from, String to)
             throws ClassNotFoundException, SQLException {

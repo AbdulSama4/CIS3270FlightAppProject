@@ -1,6 +1,8 @@
 package GUI;
 
 import BusinessLogic.Customer;
+import BusinessLogic.SessionManager;
+
 //import BusinessLogic.Flight;
 import java.io.IOException;
 import java.net.URL;
@@ -131,6 +133,8 @@ public class MainMenuController extends Customer {
 	            e.printStackTrace();
 	            lblErrors.setText("An error occurred during login");
 	        }
+	        String currentUsername = username.getText();
+	        SessionManager.setCurrentUsername(currentUsername);
 	    }
 
 }
