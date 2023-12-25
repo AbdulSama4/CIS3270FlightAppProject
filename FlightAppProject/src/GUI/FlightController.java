@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -71,6 +72,24 @@ public class FlightController extends MainMenuController implements Initializabl
     private ObservableList<Flight> observableList = FXCollections.observableArrayList();
     private String date;
     
+    
+    @FXML
+    void logOut(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("mainMenu.fxml"));
+            AnchorPane mainMenuParent = loader.load();
+            Scene mainMenuScene = new Scene(mainMenuParent);
+
+            // Get the current stage and set the new scene
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(mainMenuScene);
+
+            // Show the stage
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void enterButtonClicked(ActionEvent event) {

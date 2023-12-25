@@ -9,30 +9,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BookingController">
    <children>
-      <ImageView fitHeight="385.0" fitWidth="600.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="548.0" fitWidth="748.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Downloads/photo-1561016444-14f747499547.jpg" />
+            <Image url="@../../../../../Downloads/airport.jpeg" />
          </image>
       </ImageView>
-      <TableView fx:id="tableview" layoutX="20.0" layoutY="124.0" prefHeight="200.0" prefWidth="560.0">
-         <columns>
-            <TableColumn fx:id="colFlightNum" prefWidth="87.0" text="Flight #" />
-            <TableColumn fx:id="colDate" prefWidth="81.66668701171875" text="Date" />
-            <TableColumn fx:id="colDepartureTime" prefWidth="103.33331298828125" text="Departure time" />
-            <TableColumn fx:id="colDepartFrom" prefWidth="83.0" text="From" />
-            <TableColumn fx:id="colArrivalTo" minWidth="8.3333740234375" prefWidth="61.0" text="To" />
-            <TableColumn fx:id="colAirline" minWidth="0.0" prefWidth="77.0" text="Price" />
-            <TableColumn fx:id="colSeatPrice" prefWidth="63.5" text="Airline Name" />
-         </columns>
+      <TableView fx:id="Table" layoutX="14.0" layoutY="189.0" prefHeight="321.0" prefWidth="719.0">
+        <columns>
+          <TableColumn fx:id="colFlightNum" prefWidth="84.0" text="Flight #" />
+          <TableColumn fx:id="colDate" prefWidth="66.0" text="Date" />
+            <TableColumn fx:id="colDepartureTime" prefWidth="94.0" text="Departure Time" />
+            <TableColumn fx:id="colDepartFrom" prefWidth="79.0" text="From" />
+            <TableColumn fx:id="colArrivalTo" prefWidth="75.0" text="To" />
+            <TableColumn fx:id="colSeatPrice" prefWidth="75.0" text="Price" />
+            <TableColumn fx:id="colAirline" prefWidth="94.0" text="Airline Name" />
+            <TableColumn fx:id="colCapacity" prefWidth="75.0" text="Capacity" />
+            <TableColumn fx:id="colNumBooked" prefWidth="75.0" text="Num Booked" />
+        </columns>
       </TableView>
-      <Label alignment="CENTER" layoutX="179.0" layoutY="59.0" prefHeight="17.0" prefWidth="216.0" text="My Flights">
+      <Button fx:id="backButton" layoutX="48.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <Button fx:id="deleteBookedFlightButton" layoutX="510.0" layoutY="122.0" mnemonicParsing="false" onAction="#deleteBookedFlight" prefHeight="26.0" prefWidth="159.0" text="Delete Booked Flight" />
+      <Label alignment="CENTER" layoutX="231.0" layoutY="66.0" prefHeight="35.0" prefWidth="234.0" text="My Flights">
          <font>
-            <Font size="24.0" />
+            <Font name="Avenir Black Oblique" size="21.0" />
          </font>
       </Label>
-      <Button layoutX="26.0" layoutY="14.0" mnemonicParsing="false" text="Main Menu" />
    </children>
 </AnchorPane>
