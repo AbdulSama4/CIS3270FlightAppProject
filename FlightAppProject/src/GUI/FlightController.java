@@ -8,10 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -93,23 +98,22 @@ public class FlightController extends MainMenuController implements Initializabl
 
     @FXML
     void seeFlightsButtonClicked(ActionEvent event) {
-        lblflightBooked.setText("");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Book.fxml"));
+            Parent bookParent = loader.load();
+            Scene bookScene = new Scene(bookParent);
 
-        String from = origin.getText();
-        String to = destination.getText();
+            // Get the current stage and set the new scene
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(bookScene);
 
-        if (date == null || date.trim().equals("") || from.trim().equals("") || to.trim().equals("")) {
-            lblflightBooked.setText("One or more search fields are empty.");
-        } else {
-            try {
-                ObservableList<Flight> searchResults = getSearch(date, from, to);
-                Table.setItems(searchResults);
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-                lblflightBooked.setText("Error: " + e.getMessage());
-            }
+            // Show the stage
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+       
 
     @FXML
     void bookFlightsButtonClicked(ActionEvent event) {

@@ -27,6 +27,8 @@ public class UserBookingsData {
 
             if (affectedRows > 0) {
                 System.out.println("Booking added successfully for username: " + username + ", flightNum: " + flightNum);
+             // Update the flights table - decrease capacity and increase numBooked
+                updateFlight(flightNum);
             } else {
                 System.out.println("No rows were affected. Booking not added.");
             }
@@ -56,4 +58,32 @@ public class UserBookingsData {
             }
         }
     }
+    
+    private static void updateFlight(String flightNum) throws SQLException {
+        String selectSql = "SELECT capacity, numBooked FROM flights WHERE flightNum = ?";
+        String updateSql = "UPDATE flights SET capacity = ?, numBooked = ? WHERE flightNum = ?";
+
+        try (Connection myConn = getConnection();
+             PreparedStatement selectStmt = myConn.prepareStatement(selectSql);
+             PreparedStatement updateStmt = myConn.prepareStatement(updateSql)) {
+
+            // Get the current capacity and numBooked values
+            selectStmt.setString(1, flightNum);
+            try (ResultSet rs = selectStmt.executeQuery()) {
+                if (rs.next()) {
+                    int currentCapacity = rs.getInt("capacity");
+                    int currentNumBooked = rs.getInt("numBooked");
+
+                    // Update the flights table
+                    updateStmt.setInt(1, currentCapacity - 1); // Decrease capacity
+                    updateStmt.setInt(2, currentNumBooked + 1); // Increase numBooked
+                    updateStmt.setString(3, flightNum);
+                    updateStmt.executeUpdate();
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+}
 }
