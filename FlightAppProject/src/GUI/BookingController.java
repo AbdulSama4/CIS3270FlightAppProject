@@ -120,5 +120,41 @@ public class BookingController implements Initializable {
     }
     @FXML
     void deleteBookedFlight(ActionEvent event) {
+        // Get the selected booking
+        Booking selectedBooking = Table.getSelectionModel().getSelectedItem();
+
+        if (selectedBooking != null) {
+            // Delete the booking from the database
+            boolean deleted = deleteBooking(selectedBooking.getBookingId());
+
+            if (deleted) {
+                // Remove the booking from the UI
+                observableList.remove(selectedBooking);
+            } else {
+                // Handle the case where deletion from the database fails
+                System.out.println("Failed to delete booking from the database.");
+            }
+        } else {
+            System.out.println("No booking selected.");
+        }
+    }
+
+    // Method to delete a booking from the database
+    private boolean deleteBooking(int bookingId) {
+        // You need to implement this method based on your database schema
+        // Use a PreparedStatement to delete the booking from the database
+        String sql = "DELETE FROM user_bookings WHERE booking_id = ?";
+        
+        try (Connection con = UserBookingsData.getConnection();
+             PreparedStatement myStmt = con.prepareStatement(sql)) {
+
+            myStmt.setInt(1, bookingId);
+            int rowsAffected = myStmt.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }
