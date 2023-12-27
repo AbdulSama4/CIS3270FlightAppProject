@@ -252,4 +252,29 @@ public class FlightController extends MainMenuController implements Initializabl
         Table.setItems(observableList);
         Table.setVisible(false);
     }
+
+ // Method that checks if flight times have a conflict with one another
+    
+    private boolean flightTimeConflict(String date, String departureTime, String arrivalTime) {
+        try {
+            ObservableList<Flight> existingBookings = getSearch(date, "", "");
+
+            for (Flight booking : existingBookings) {
+                String bookedDepartureTime = booking.getDepartureTime();
+                String bookedArrivalTime = booking.getArrivalTime();
+
+                if (checkTimeConflict(departureTime, arrivalTime, bookedDepartureTime, bookedArrivalTime)) {
+                    return true; // Time conflict found
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            handleTimeConflictError(e);
+        }
+        return false; // No time conflict found
+    }
+
+    private void handleTimeConflictError(Exception e) {
+        e.printStackTrace();
+        lblflightBooked.setText("Error checking for time conflict: " + e.getMessage());
+    }
 }
