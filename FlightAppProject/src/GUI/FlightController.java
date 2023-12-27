@@ -277,4 +277,30 @@ public class FlightController extends MainMenuController implements Initializabl
         e.printStackTrace();
         lblflightBooked.setText("Error checking for time conflict: " + e.getMessage());
     }
-}
+
+  //Method to check if the times over lap
+
+    private boolean checkTimeConflict(String time1Start, String time1End, String time2Start, String time2End) {
+    try {
+       int start1TotalMinutes = convertToTotalMinutes(time1Start);
+       int end1TotalMinutes = convertToTotalMinutes(time1End);
+
+       int start2TotalMinutes = convertToTotalMinutes(time2Start);
+       int end2TotalMinutes = convertToTotalMinutes(time2End);
+
+       // Check for overlap
+       return !(end1TotalMinutes < start2TotalMinutes || start1TotalMinutes > end2TotalMinutes);
+    } catch (NumberFormatException e) {
+       e.printStackTrace();
+       
+       return false;
+    }
+    }
+
+    private int convertToTotalMinutes(String time) {
+    String[] parts = time.split(":");
+    int hours = Integer.parseInt(parts[0]);
+    int minutes = Integer.parseInt(parts[1]);
+    return hours * 60 + minutes;
+    }
+    }
