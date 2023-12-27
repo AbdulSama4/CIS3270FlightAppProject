@@ -39,7 +39,7 @@
       </TableView>
 	<Button fx:id="seeFlightsButton" layoutX="436.0" layoutY="55.0" mnemonicParsing="false" onAction="#seeFlightsButtonClicked" text="See Flights" />
 	<Button fx:id="bookFlightsButton" layoutX="436.0" layoutY="127.0" mnemonicParsing="false" onAction="#bookFlightsButtonClicked" text="Book Flight" />
-	<Button fx:id="logOutButton" layoutX="642.0" layoutY="14.0" mnemonicParsing="false" text="Logout" onAction="#logOut" />
+	<Button fx:id="logOutButton" layoutX="540.0" layoutY="14.0" mnemonicParsing="false" text="Logout" onAction="#logOut" />
       <Button fx:id="enterButton" layoutX="283.0" layoutY="92.0" mnemonicParsing="false" onAction="#enterButtonClicked" text="Enter" />
    </children>
 </AnchorPane>
