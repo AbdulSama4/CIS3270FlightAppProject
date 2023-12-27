@@ -144,21 +144,24 @@ public class FlightController extends MainMenuController implements Initializabl
         }
 
         try {
-        	String username = SessionManager.getCurrentUsername(); // Get the username of the current signed-in user customerID = getcustomerID(); // Get the ID of the current signed-in user
+            String username = SessionManager.getCurrentUsername();
             String flightNum = selectedFlight.getFlightNum();
 
             if (!UserBookingsData.isBooked(username, flightNum)) {
-                // Check if the user has not already booked this flight
-                FlightData flightData = new FlightData(); // Instantiate FlightData
+                FlightData flightData = new FlightData();
                 if (!flightData.flightFull(flightNum)) {
-                    // Check if the flight is not full
-                	UserBookingsData.addBooking(username, flightNum);
+                    // Check for time conflict before booking
+                    if (!flightTimeConflict(date, selectedFlight.getDepartureTime(), selectedFlight.getArrivalTime())) {
+                        UserBookingsData.addBooking(username, flightNum);
 
-                    // Update the TableView to reflect the changes
-                    ObservableList<Flight> updatedFlights = getSearch(date, origin.getText(), destination.getText());
-                    Table.setItems(updatedFlights);
+                        // Update the TableView to reflect the changes
+                        ObservableList<Flight> updatedFlights = getSearch(date, origin.getText(), destination.getText());
+                        Table.setItems(updatedFlights);
 
-                    lblflightBooked.setText("Flight booked successfully!");
+                        lblflightBooked.setText("Flight booked successfully!");
+                    } else {
+                        lblflightBooked.setText("Sorry, there is a time conflict with the selected flight.");
+                    }
                 } else {
                     lblflightBooked.setText("Sorry, the flight is already full.");
                 }
@@ -169,11 +172,10 @@ public class FlightController extends MainMenuController implements Initializabl
             e.printStackTrace();
             lblflightBooked.setText("Error booking the flight: " + e.getMessage());
         }
-        
+
         String selectedFlightNum = selectedFlight.getFlightNum();
         SessionManager.setSelectedFlightNum(selectedFlightNum);
-        
-}
+    }
 
     private ObservableList<Flight> getSearch(String date, String from, String to)
             throws ClassNotFoundException, SQLException {
