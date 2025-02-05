@@ -1,0 +1,1 @@
+This was a demo project utilizing Javafx scene builder and Dbeaver to store login credentials for a mock flight booking experience. Allowing users to test it out and book flights after signing up in the main menu. 
